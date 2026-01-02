@@ -1,10 +1,11 @@
 // import express from "express" -> used when type: module
 
 import express from "express";
-import dotenv from "dotenv"
-import taskRoutes from "./routes/taskRoutes.js" 
-import userRoutes from "./routes/userRoutes.js" 
-import authRoutes from "./routes/authRouter.js" 
+import dotenv from "dotenv";
+import cors from "cors";
+import taskRoutes from "./routes/taskRoutes.js"; 
+import userRoutes from "./routes/userRoutes.js"; 
+import authRoutes from "./routes/authRouter.js"; 
 import { connectDb } from "./config/db.js";
 import rateLimiter from "./middleware/rateLimiter.js";
 
@@ -14,6 +15,11 @@ dotenv.config()
 const app = express();
 
 // middleware
+app.use(cors(
+  {
+    origin: "http://localhost:5173"
+  }
+))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(rateLimiter)

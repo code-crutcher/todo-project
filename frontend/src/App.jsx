@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router'
 import HomePage from './pages/HomePage.jsx'
 import CreatePage from './pages/CreatePage.jsx'
-import NoteDetailPage from './pages/NoteDetailPage.jsx'
+import NoteDetailPage from './pages/TaskDetailPage.jsx'
 import UserDetailPage from './pages/UserDetailPage.jsx'
 // import toast from 'react-hot-toast'
 
@@ -20,7 +20,7 @@ const App = () => {
           element={<CreatePage />}
         />
         <Route
-          path="/note/:id"
+          path="/tasks/:id"
           element={<NoteDetailPage />}
         />
         <Route
