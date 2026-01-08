@@ -100,59 +100,56 @@ const CreatePage = () => {
                     <label className="label">
                     <span className="label-text">Description</span>
                   </label>
-                  <input 
-                    type="textarea" 
-                    name="" 
-                    id="" 
+                  <textarea 
                     placeholder="Task Description"
                     className='textarea textarea-bordered h-32'
                     onChange={(e) => setDescription(e.target.value)}
                   />
                   </div>
                   <div className="form-control mb-4">
-                    </div>
-                  <label className="label">
-                    <span className="label-text">Priority</span>
-                  </label>
-                    <div className="flex left items-center gap-4">
-                    <div className="flex items-center">
+                    <label className="label">
+                      <span className="label-text">Priority</span>
+                    </label>
+                      <div className="flex left items-center gap-4">
+                      <div className="flex items-center">
+                        <input 
+                          type="radio" 
+                          name="priority" 
+                          className="radio radio-xs"
+                          value="High"
+                          onChange={(e)=> setPriority(e.target.value)}
+                        >
+                        </input>
+                        <label className='label'>
+                          <span className="label-text">High</span>
+                        </label>
+                      </div>
+                      <div className="flex items-center">
                       <input 
                         type="radio" 
-                        name="priority" 
+                        name="priority"  
                         className="radio radio-xs"
-                        value="High"
+                        value="Medium"
                         onChange={(e)=> setPriority(e.target.value)}
                       >
                       </input>
                       <label className='label'>
-                        <span className="label-text">High</span>
+                        <span className="label-text">Medium</span>
                       </label>
-                    </div>
-                    <div className="flex items-center">
-                    <input 
-                      type="radio" 
-                      name="priority"  
-                      className="radio radio-xs"
-                      value="Medium"
-                      onChange={(e)=> setPriority(e.target.value)}
-                    >
-                    </input>
-                    <label className='label'>
-                      <span className="label-text">Medium</span>
-                    </label>
-                    </div>
-                    <div className="flex items-center">
-                    <input 
-                      type="radio" 
-                      name="priority"  
-                      className="radio radio-xs"
-                      value="Low"
-                      onChange={(e)=> setPriority(e.target.value)}
-                    >
-                    </input>
-                    <label className='label'>
-                      <span className="label-text">Low</span>
-                    </label>
+                      </div>
+                      <div className="flex items-center">
+                      <input 
+                        type="radio" 
+                        name="priority"  
+                        className="radio radio-xs"
+                        value="Low"
+                        onChange={(e)=> setPriority(e.target.value)}
+                      >
+                      </input>
+                      <label className='label'>
+                        <span className="label-text">Low</span>
+                      </label>
+                      </div>
                     </div>
                   </div>
                   <div className="form-control mb-4">

@@ -50,8 +50,8 @@ const TaskCard = ({ task,setTasks }) => {
   }
 
   return (
-    <Link to={`/tasks/${task._id}`}
-      className='card bg-base-100 shadow-lg hover:border-none transition-all duration-200 border-t-4 border-solid border-primary'
+    <div
+      className='card bg-base-100 shadow-lg hover:border-none transition-all duration-200 border-t-4 border-solid border-primary cursor-default'
     >
       <div className="card-body">
         <div className="flex justify-between items-center">
@@ -73,14 +73,16 @@ const TaskCard = ({ task,setTasks }) => {
             <span className='text-sm text-base-content/70'>{task.assignedTo.firstName} {task.assignedTo.lastName}</span>
           </div>
           <div className="flex items-center gap-1">
-            <PenSquareIcon className='size-4'/>
+            <Link to={`tasks/${task._id}`} className='btn btn-outline btn-xs'>
+              <PenSquareIcon className='size-4'/>
+            </Link>
             <button className='btn btn-ghost btn-xs text-error'onClick={(e)=> handleDelete(e,task._id)}>
               <Trash2Icon className='size-4'/>
             </button>
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   )
 }
 
