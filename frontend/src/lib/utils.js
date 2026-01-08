@@ -13,7 +13,7 @@ export function daysLeft(date){
 
   const diffInDays = Math.ceil(diffInMs/(1000 * 60 * 60 * 24));
 
-  if(diffInDays > 0){
+  if(diffInDays >= 0){
     return `${diffInDays} days left`;
   }else{
     return 'Overdue'

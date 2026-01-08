@@ -50,7 +50,7 @@ const TaskCard = ({ task }) => {
         <div className="flex justify-between items-center mt-8">
           <div className="flex flex-start items-center gap-2">
             <CircleUserIcon color='#2596be' className='size-6'/>
-            <span className='text-sm text-base-content/70'>{task.assignedTo}</span>
+            <span className='text-sm text-base-content/70'>{task.assignedTo.firstName} {task.assignedTo.lastName}</span>
           </div>
           <div className="flex items-center gap-1">
             <PenSquareIcon className='size-4'/>

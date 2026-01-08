@@ -1,10 +1,10 @@
 import React , {useState, useEffect} from 'react'
-import axios from 'axios'
 import toast from "react-hot-toast"
 import Navbar from '../components/Navbar'
 import RateLimitedUI from '../components/RateLimitedUI'
 import TaskCard from '../components/TaskCard'
 import { Divide } from 'lucide-react'
+import api from '../lib/axios'
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [tasks, setTasks] = useState([]);
@@ -18,7 +18,7 @@ const HomePage = () => {
         const data = await res.json();
         console.log(data)*/
 
-        const res = await axios.get("http://localhost:3000/api/tasks");
+        const res = await api.get("/notes");
         console.log("data",res.data);
         setTasks(res.data);
         setIsRateLimited(false)

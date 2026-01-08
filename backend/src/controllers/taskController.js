@@ -1,8 +1,8 @@
-import Task from "../models/task.js";
+import Task from "../models/Task.js";
 
 export async function getAllTasks (req, res){
   try{
-    const tasks = await Task.find().sort({createdAt : 1});// newest first
+    const tasks = await Task.find().populate('assignedTo','firstName lastName').sort({createdAt : 1});// newest first
     res.status(200).json(tasks)
   }catch(error){
     console.log("Error while fetching all tasks", error)

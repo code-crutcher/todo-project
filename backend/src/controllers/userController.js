@@ -1,5 +1,15 @@
 import User from "../models/user.js";
 
+export async function getAllUsers (req, res){
+  try{
+    const users = await User.find().sort({createdAt : 1});// newest first
+    res.status(200).json(users)
+  }catch(error){
+    console.log("Error while fetching all tasks", error)
+    res.status(500).json({message: "internal server error"})
+  }
+}
+
 export async function getUserDetail(req, res){
   try {
     const user = await User.findById(req.params.id);
