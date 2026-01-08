@@ -18,7 +18,7 @@ const HomePage = () => {
         const data = await res.json();
         console.log(data)*/
 
-        const res = await api.get("/notes");
+        const res = await api.get("/tasks");
         console.log("data",res.data);
         setTasks(res.data);
         setIsRateLimited(false)
