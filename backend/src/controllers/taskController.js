@@ -71,7 +71,7 @@ export async function editTask (req, res){
 
 export async function deleteTask (req, res){
   try {
-    const deleteTask = await Task.findOneAndDelete(req.params.id)
+    const deleteTask = await Task.findByIdAndDelete(req.params.id)
     
     if(!deleteTask){
       return res.status(404).json({message : "Task not found"})

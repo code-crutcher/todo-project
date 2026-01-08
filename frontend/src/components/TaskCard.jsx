@@ -2,8 +2,28 @@ import React from 'react'
 import { Link } from 'react-router'
 import { CircleUserIcon, PenSquareIcon, Trash2Icon } from 'lucide-react'
 import { CalendarIcon } from 'lucide-react'
+import toast from 'react-hot-toast'
 import { formatDate, daysLeft } from '../lib/utils'
-const TaskCard = ({ task }) => {
+import api from '../lib/axios'
+
+const TaskCard = ({ task,setTasks }) => {
+
+  const handleDelete = async (e, id) => {
+    console.log(id);
+    e.preventDefault(); //get rid of navigation behaviour
+
+    if(!window.confirm("Are you sure you want to delete this task?")) return;
+
+    try {
+      await api.delete(`/tasks/${id}`);
+      setTasks((prev)=> prev.filter(task => task._id !== id)) //to get rid of the deleted one
+      console.log(task._id)
+      toast.success("Task Deleted")
+    } catch (error) {
+      console.log("error while deleting task", error)
+      toast.error("Error while deleting the task")
+    }
+  }
 
   const taskPriority = () => {
     if (task.priority === 'High') {
@@ -54,7 +74,7 @@ const TaskCard = ({ task }) => {
           </div>
           <div className="flex items-center gap-1">
             <PenSquareIcon className='size-4'/>
-            <button className='btn btn-ghost btn-xs text-error'>
+            <button className='btn btn-ghost btn-xs text-error'onClick={(e)=> handleDelete(e,task._id)}>
               <Trash2Icon className='size-4'/>
             </button>
           </div>
