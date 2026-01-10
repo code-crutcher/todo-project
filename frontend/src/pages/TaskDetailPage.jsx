@@ -94,7 +94,7 @@ const TaskDetailPage = () => {
           }
         });
       toast.success("Task Updated Successfully!!")
-      navigate("/")
+      navigate("/home")
     } catch (error) {
       console.log("Error while saving task", error)
       toast.error("Failed to update task")

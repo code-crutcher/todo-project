@@ -3,6 +3,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from 'path'
 // import bodyParser from "body-parser";
 import taskRoutes from "./routes/taskRoutes.js"; 
 import userRoutes from "./routes/userRoutes.js"; 
@@ -15,13 +16,17 @@ dotenv.config()
 // console.log('environment variable',process.env.MONGO_URI)
 
 const app = express();
+const PORT = process.env.PORT || 5001;
+const __dirname = path.resolve();
 
 // middleware
-app.use(cors(
-  {
-    origin: "http://localhost:5173"
-  }
-))
+if(process.env.NODE_ENV !== 'production'){
+  app.use(cors(
+    {
+      origin: "http://localhost:5173"
+    }
+  ))
+}
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(rateLimiter)
@@ -30,7 +35,13 @@ app.use("/api/auth",authRoutes)
 app.use("/api/tasks",authenticationVerify, taskRoutes)
 app.use("/api/users",authenticationVerify, userRoutes)
 
-const PORT = process.env.PORT || 5001;
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static(path.join(__dirname, "../frontend/dist")))
+
+  app.get("*",(req, res)=>{
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+  })
+}
 
 connectDb().then(()=>{
   app.listen(PORT,()=>{
