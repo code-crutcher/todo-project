@@ -12,7 +12,6 @@ const TaskDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false)
 
-
   const navigate = useNavigate();
 
   const {id} = useParams();
@@ -20,7 +19,11 @@ const TaskDetailPage = () => {
   useEffect(()=>{
       const fetchUsers = async()=>{
         try {
-          const res = await api.get("/users")
+          const res = await api.get("/users",{
+          headers: {
+            'Authorization' : localStorage.getItem('token')
+          }
+        })
           console.log("data",res.data);
           setUsers(res.data)
         } catch (error) {
@@ -39,7 +42,11 @@ const TaskDetailPage = () => {
   useEffect(()=>{
     const fetchTask = async()=>{
       try {
-        const res = await api.get(`/tasks/${id}`)
+        const res = await api.get(`/tasks/${id}`,{
+          headers: {
+            'Authorization' : localStorage.getItem('token')
+          }
+        })
         setTask(res.data)
       } catch (error) {
         console.log("Error while fetching task", error)
@@ -58,10 +65,14 @@ const TaskDetailPage = () => {
     if(!window.confirm("Are you sure you want to delete task")) return;
 
     try {
-      await api.delete(`/tasks/${id}`);
+      await api.delete(`/tasks/${id}`,{
+          headers: {
+            'Authorization' : localStorage.getItem('token')
+          }
+        });
       setTask((prev)=> prev.filter(task => task._id !== id))
       toast.success("Task Deleted")
-      navigate("/")
+      navigate("/home")
     } catch (error) {
       console.log("Error while deleting task", error)
       toast.error("Error while deleting task")
@@ -77,7 +88,11 @@ const TaskDetailPage = () => {
     setSaving(true)
 
     try {
-      await api.put(`tasks/${id}`, task);
+      await api.put(`tasks/${id}`, task,{
+          headers: {
+            'Authorization' : localStorage.getItem('token')
+          }
+        });
       toast.success("Task Updated Successfully!!")
       navigate("/")
     } catch (error) {

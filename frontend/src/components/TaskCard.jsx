@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { CircleUserIcon, PenSquareIcon, Trash2Icon } from 'lucide-react'
+import { UserPen, UserCheck2Icon, PenSquareIcon, Trash2Icon } from 'lucide-react'
 import { CalendarIcon } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { formatDate, daysLeft } from '../lib/utils'
@@ -15,7 +15,11 @@ const TaskCard = ({ task,setTasks }) => {
     if(!window.confirm("Are you sure you want to delete this task?")) return;
 
     try {
-      await api.delete(`/tasks/${id}`);
+      await api.delete(`/tasks/${id}`,{
+          headers: {
+            'Authorization' : localStorage.getItem('token')
+          }
+        });
       setTasks((prev)=> prev.filter(task => task._id !== id)) //to get rid of the deleted one
       console.log(task._id)
       toast.success("Task Deleted")
@@ -67,13 +71,17 @@ const TaskCard = ({ task,setTasks }) => {
           </span>
           <span className='text-xs text-primary font-semibold'>{daysLeft(task.dueDate)}</span>
         </div>
-        <div className="flex justify-between items-center mt-8">
+        <div className="flex justify-between items-center mt-8 lg:flex-col lg:items-start lg:gap-6">
           <div className="flex flex-start items-center gap-2">
-            <CircleUserIcon color='#2596be' className='size-6'/>
+            <UserCheck2Icon color='#2596be' className='size-6'/>
             <span className='text-sm text-base-content/70'>{task.assignedTo.firstName} {task.assignedTo.lastName}</span>
           </div>
+          <div className="flex flex-start items-center gap-2">
+            <UserPen color='gray' className='size-6'/>
+            <span className='text-sm text-base-content/70'>{task.assignor.firstName} {task.assignor.lastName}</span>
+          </div>
           <div className="flex items-center gap-1">
-            <Link to={`tasks/${task._id}`} className='btn btn-outline btn-xs'>
+            <Link to={`/tasks/${task._id}`} className='btn btn-outline btn-xs'>
               <PenSquareIcon className='size-4'/>
             </Link>
             <button className='btn btn-ghost btn-xs text-error'onClick={(e)=> handleDelete(e,task._id)}>

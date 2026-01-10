@@ -3,11 +3,13 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+// import bodyParser from "body-parser";
 import taskRoutes from "./routes/taskRoutes.js"; 
 import userRoutes from "./routes/userRoutes.js"; 
 import authRoutes from "./routes/authRouter.js"; 
 import { connectDb } from "./config/db.js";
 import rateLimiter from "./middleware/rateLimiter.js";
+import authenticationVerify from "./middleware/auth.js";
 
 dotenv.config()
 // console.log('environment variable',process.env.MONGO_URI)
@@ -25,18 +27,8 @@ app.use(express.urlencoded({extended: true}))
 app.use(rateLimiter)
 
 app.use("/api/auth",authRoutes)
-/*
-app.use("/api/tasks", (req, res, next)=>{
-  if(req.isLoggedIn){
-    next();
-  }
-  else{
-      return res.redirect("/login")
-  }
-})
-*/
-app.use("/api/tasks", taskRoutes)
-app.use("/api/users", userRoutes)
+app.use("/api/tasks",authenticationVerify, taskRoutes)
+app.use("/api/users",authenticationVerify, userRoutes)
 
 const PORT = process.env.PORT || 5001;
 

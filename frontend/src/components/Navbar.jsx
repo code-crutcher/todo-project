@@ -1,7 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import {PlusIcon} from "lucide-react"
-const Navbar = () => {
+import toast from 'react-hot-toast';
+const Navbar = ({isLoggedIn}) => {
+
+  const navigate = useNavigate();
+
+  const handleLogout = ()=>{
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
+    toast.success("Logged out Successfully")
+    navigate("/login")
+  }
+
   return (
    <header className='bg-base-300 border-b border-base-content/10'>
     <div className='mx-auto max-w-7xl p-4'>
@@ -10,10 +21,20 @@ const Navbar = () => {
           TaskFlow
         </h1>
         <div className="flex items-center gap-4">
-          <Link to={"/create"} className='btn btn-primary'>
-            <PlusIcon className='size-5'/>
-            <span>New Task</span>
-          </Link>
+          {isLoggedIn ? 
+          <>
+            <Link to={"/create"} className='btn btn-primary'>
+              <PlusIcon className='size-5'/>
+              <span>New Task</span>
+            </Link> 
+            <button onClick={handleLogout} className='btn btn-primary'>
+              <span>Logout</span>
+            </button>
+          </> 
+            : 
+            <Link to={"/signup"} className='btn btn-primary'>
+              <span>SignUp</span>
+            </Link>}
         </div>
       </div>
     </div>

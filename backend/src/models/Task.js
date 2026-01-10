@@ -32,6 +32,11 @@ const taskSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+
+  assignor:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
   // instead of creating a created at we will use mongoose feature of timestamp
 },
   { timestamps: true} //createdAt, updatedAt

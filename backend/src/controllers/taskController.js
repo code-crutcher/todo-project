@@ -2,7 +2,14 @@ import Task from "../models/Task.js";
 
 export async function getAllTasks (req, res){
   try{
-    const tasks = await Task.find().populate('assignedTo','firstName lastName').sort({createdAt : 1});// newest first
+    const tasks = await Task.find().populate([
+      {
+        path: 'assignedTo', select: 'firstName lastName'
+      },
+      {
+        path: 'assignor', select: 'firstName lastName'
+      }
+  ]).sort({createdAt : 1});// newest first
     res.status(200).json(tasks)
   }catch(error){
     console.log("Error while fetching all tasks", error)
@@ -27,13 +34,17 @@ export async function createTask (req, res){
   try {
     const {title, description, priority, status, dueDate, assignedTo} = req.body;
 
+    const assignor = req.user.id;
+    
+
     const task = new Task({
       title,
       description,
       priority,
       status,
       dueDate,
-      assignedTo
+      assignedTo,
+      assignor
     });
 
     const savedTask = await task.save();

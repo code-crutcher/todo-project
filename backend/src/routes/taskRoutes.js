@@ -15,6 +15,4 @@ taskRoutes.delete("/:id", deleteTask)
 
 taskRoutes.get("/")
 
-
-
 export default taskRoutes

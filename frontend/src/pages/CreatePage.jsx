@@ -15,12 +15,18 @@ const CreatePage = () => {
   const [loading, setLoading] = useState(true)
   const status = "To-Do";
 
+  const assignor = localStorage.getItem('id');
+
   const navigate = useNavigate();
 
   useEffect(()=>{
     const fetchUsers = async()=>{
       try {
-        const res = await api.get("/users")
+        const res = await api.get("/users",{
+          headers: {
+            'Authorization' : localStorage.getItem('token')
+          }
+        })
         console.log("data",res.data);
         setUsers(res.data)
       } catch (error) {
@@ -48,12 +54,17 @@ const CreatePage = () => {
         priority,
         status,
         dueDate,
-        assignedTo
-      })
+        assignedTo,
+        assignor
+      },{
+          headers: {
+            'Authorization' : localStorage.getItem('token')
+          }
+        })
       toast.success("Task created successfully")
-      navigate("/")
+      navigate("/home")
     } catch (error) {
-      console.log("Error while craetng task",error)
+      console.log("Error while creating task",error)
       if(error.response.status === 429){
         toast.error("Slow down! You're creating tasks too fast!!",{
           duration: 4000,
@@ -75,7 +86,7 @@ const CreatePage = () => {
         <div className="max-w-2xl mx-auto">
           {loading ?
             <div>Loading..</div>
-          : <div><Link to={"/"} className="btn btn-ghost mb-6">
+          : <div><Link to={"/home"} className="btn btn-ghost mb-6">
             <ArrowLeft className='size-4'/>
             Back to Tasks
           </Link>
